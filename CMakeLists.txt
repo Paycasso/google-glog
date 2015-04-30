@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 2.8)
 INCLUDE (CheckIncludeFiles)
 INCLUDE (CheckFunctionExists)
 INCLUDE (CheckSymbolExists)
+include (GNUInstallDirs)
+
 project(google-glog)
+set(VERSION 0.3.3)
 
 if(NOT HAS_MZ_GLOBAL)
     include(global.cmake)
@@ -43,6 +46,13 @@ CHECK_FUNCTION_EXISTS(__builtin_expect HAVE___BUILTIN_EXPECT)
 CHECK_FUNCTION_EXISTS(__sync_val_compare_and_swap HAVE___SYNC_VAL_COMPARE_AND_SWAP)
 
 CONFIGURE_FILE(src/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/src/glog-config.h)
+
+set(prefix ${CMAKE_INSTALL_PREFIX})
+set(exec_prefix ${prefix}/${CMAKE_INSTALL_BINDIR})
+set(libdir ${prefix}/${CMAKE_INSTALL_LIBDIR})
+set(includedir ${prefix}/${CMAKE_INSTALL_INCLUDEDIR})
+
+configure_file(libglog.pc.in ${CMAKE_CURRENT_BINARY_DIR}/libglog.pc @ONLY)
 
 mz_use_default_compiler_settings()
 mz_add_flag(GCC -fPIC)
@@ -139,9 +149,9 @@ if(WIN32)
                 PATTERN "*.svn" EXCLUDE)
 else()
     install(TARGETS google-glog
-                LIBRARY DESTINATION lib
-                RUNTIME DESTINATION bin
-                ARCHIVE DESTINATION lib)
+                LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(DIRECTORY src/glog
                 DESTINATION include
                 PATTERN "*.svn" EXCLUDE)
