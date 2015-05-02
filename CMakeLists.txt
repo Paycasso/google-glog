@@ -153,7 +153,7 @@ else()
                 LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(FILE libglog.pc
+    install(FILES libglog.pc
                 DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
     install(DIRECTORY src/glog
                 DESTINATION include
