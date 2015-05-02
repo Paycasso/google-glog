@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
+project(glog)
+set(VERSION 0.3.3)
+enable_language(CXX)
+
 INCLUDE (CheckIncludeFiles)
 INCLUDE (CheckFunctionExists)
 INCLUDE (CheckSymbolExists)
-include (GNUInstallDirs)
-
-project(google-glog)
-set(VERSION 0.3.3)
+INCLUDE (GNUInstallDirs)
 
 if(NOT HAS_MZ_GLOBAL)
     include(global.cmake)
@@ -130,14 +131,14 @@ else()
 endif()
 
 mz_add_flag(GCC -Wall -Wwrite-strings -Woverloaded-virtual -Wno-sign-compare)
-add_library(google-glog STATIC ${SRCS} ${HDRS})
-target_link_libraries(google-glog gflags ${GLOG_3LIBS})
-set_property(TARGET google-glog PROPERTY VERSION 0.3.3)
-set_property(TARGET google-glog PROPERTY SOVERSION 0.3.3)
-mz_target_props(google-glog)
+add_library(${PROJECT_NAME} ${SRCS} ${HDRS})
+target_link_libraries(${PROJECT_NAME} gflags ${GLOG_3LIBS})
+set_property(TARGET ${PROJECT_NAME} PROPERTY VERSION ${VERSION})
+set_property(TARGET ${PROJECT_NAME} PROPERTY SOVERSION ${VERSION})
+mz_target_props(${PROJECT_NAME})
 
 if(WIN32)
-    install(TARGETS google-glog
+    install(TARGETS ${PROJECT_NAME}
                 LIBRARY DESTINATION lib
                 RUNTIME DESTINATION bin
                 ARCHIVE DESTINATION lib)
@@ -148,7 +149,7 @@ if(WIN32)
                 DESTINATION doc
                 PATTERN "*.svn" EXCLUDE)
 else()
-    install(TARGETS google-glog
+    install(TARGETS ${PROJECT_NAME}
                 LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -157,11 +158,11 @@ else()
                 PATTERN "*.svn" EXCLUDE)
     if(APPLE)
         install(DIRECTORY doc
-                DESTINATION Library/Documentation/google-glog
+                DESTINATION Library/Documentation/${PROJECT_NAME}
                 PATTERN "*.svn" EXCLUDE)
     else()
         install(DIRECTORY doc
-                DESTINATION share/doc/google-glog-doc
+                DESTINATION share/doc/${PROJECT_NAME}-doc
                 PATTERN "*.svn" EXCLUDE)
     endif()
 endif()
