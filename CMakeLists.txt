@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
+project(glog)
+set(VERSION 0.3.3)
+enable_language(CXX)
+
 INCLUDE (CheckIncludeFiles)
 INCLUDE (CheckFunctionExists)
 INCLUDE (CheckSymbolExists)
-include (GNUInstallDirs)
-
-project(google-glog)
-set(VERSION 0.3.3)
+INCLUDE (GNUInstallDirs)
 
 if(NOT HAS_MZ_GLOBAL)
     include(global.cmake)
