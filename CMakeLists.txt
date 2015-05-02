@@ -153,6 +153,8 @@ else()
                 LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    install(FILE libglog.pc
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
     install(DIRECTORY src/glog
                 DESTINATION include
                 PATTERN "*.svn" EXCLUDE)
@@ -162,7 +164,7 @@ else()
                 PATTERN "*.svn" EXCLUDE)
     else()
         install(DIRECTORY doc
-                DESTINATION share/doc/${PROJECT_NAME}-doc
+                DESTINATION ${CMAKE_INSTALL_DOCDIR}
                 PATTERN "*.svn" EXCLUDE)
     endif()
 endif()
